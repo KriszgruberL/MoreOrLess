@@ -18,17 +18,24 @@ nombre mystère est supérieur ou inférieur à celui que vous avez entré.
 
 //Macro
 // Remplacer au moment de la compilation par les valeur de la macro, ne prends pas de place mémoire
-#define tryPlurial "ies" : "y"
+#define tryPlurial cpt > 1 ? "ies" : "y"
+#define nbTryLeft 5
+
+//TODO function that allow for different difficulties with function that set up min, max, nbTryLeft
+// TODO menu to chose said difficulty
+// TODO Dichotomy search so the computer can resolve the game itself like a big boy
+// TODO Multiplayer mode
 
 int main() {
     int computer_nb,
         player_nb = 0,
-        cpt = 5,
+        cpt = 0,
         min = 0,
         max = 100;
 
     srand(time(NULL));
     computer_nb = (rand() % (max - min + 1)) + min;
+    printf("%d\n", computer_nb);
 
 //    Mode multiplayer (2)
 //    do {
@@ -39,28 +46,34 @@ int main() {
 //    system("cls");
     do {
         do {
+//            Guesses
             printf("Please enter your guess between %d and %d : \n", min, max);
             scanf("%d", &player_nb);
             if(player_nb > max || player_nb < min){
+//                Verify that the number chosed is between max and min
                 printf("%d is not a valid number. The guess has to be between %d and %d\n", player_nb, min, max);
-                printf("Number of tr%s left : %d \n", cpt > 1 ? "ies" : "y", cpt);
             }
         } while (player_nb < min || player_nb > max );
 
+//       Increment cpt no matter the result
+        cpt++;
+//        More or less check
         if (computer_nb > player_nb){
             printf("More\n");
-            cpt--;
-            printf("Number of tr%s left : %d \n", cpt > 1 ? tryPlurial, cpt);
-        } else if (computer_nb < player_nb){
+            printf("You tried : %d / %d\n", cpt, nbTryLeft);
+        } else if (computer_nb < player_nb) {
             printf("Less\n");
-            cpt--;
-            printf("Number of tr%s left : %d \n", cpt > 1 ? tryPlurial, cpt);
-        } else {
-            printf("Congratulations, you've found it in %d tr%s!\n", cpt--, cpt > 1 ? tryPlurial);
+            printf("You tried : %d / %d\n", cpt, nbTryLeft);
         }
-    } while (cpt != 0 && computer_nb != player_nb);
+//      Check if there are still attempts remaining and if the guessed number is incorrect
+    } while ((cpt < nbTryLeft) && (computer_nb != player_nb));
 
-    printf("\nYou loose, the number was %d", computer_nb);
+//    Print result
+    if (computer_nb == player_nb) {
+        printf("Congratulations, you've found the correct number in %d tr%s!\n", cpt, tryPlurial);
+    } else {
+        printf("\nYou loose, the number was %d", computer_nb);
+    }
 
     return 0;
 }
