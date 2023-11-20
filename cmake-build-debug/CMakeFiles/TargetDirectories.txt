@@ -1,0 +1,3 @@
+C:/Users/lkris/OneDrive/Bureau/Bac info gestion/752105UD2 - Principes algorithmiques et programmation/more_less_game/cmake-build-debug/CMakeFiles/more_less_game.dir
+C:/Users/lkris/OneDrive/Bureau/Bac info gestion/752105UD2 - Principes algorithmiques et programmation/more_less_game/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/lkris/OneDrive/Bureau/Bac info gestion/752105UD2 - Principes algorithmiques et programmation/more_less_game/cmake-build-debug/CMakeFiles/rebuild_cache.dir

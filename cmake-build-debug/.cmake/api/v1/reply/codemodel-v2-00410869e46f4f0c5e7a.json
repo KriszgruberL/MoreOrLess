@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.26"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "more_less_game",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "more_less_game::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-more_less_game-Debug-6e86250cbdc0a03568c5.json",
+					"name" : "more_less_game",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/lkris/OneDrive/Bureau/Bac info gestion/752105UD2 - Principes algorithmiques et programmation/more_less_game/cmake-build-debug",
+		"source" : "C:/Users/lkris/OneDrive/Bureau/Bac info gestion/752105UD2 - Principes algorithmiques et programmation/more_less_game"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 5
+	}
+}
