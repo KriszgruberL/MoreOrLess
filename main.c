@@ -35,14 +35,14 @@ int randomComputerNb(int min_i, int max_i);
 
 void gameLevel(int min_i, int max_i, int tries_i);
 
-int computer_nb, player_nb,
+int computerNb, playerNb,
         cpt,
-        tries, min, max, // Needed for the multiplayer part
+        tries, lowerBound, upperBound, // Needed for the multiplayer part
 modeChoice, levelChoice;
 
 int main() {
-    computer_nb = 0,
-    player_nb = 0,
+    computerNb = 0,
+    playerNb = 0,
     cpt = 0,
     tries = 0;
     modeChoice = 0;
@@ -78,18 +78,18 @@ int main() {
 
 void multiplayerMode() {
     //    Mode multiplayer (2)
-    min = 0;
-    max = 0;
+    lowerBound = 0;
+    upperBound = 0;
     tries = 0;
 
     do {
         printf("Hello player 1, you have to make player 2 guess a number. Ready or not, let's go ! \n\n");
         printf("Please enter the minimum number to guess : \n");
-        scanf("%d", &min);
+        scanf("%d", &lowerBound);
         printf("Please enter the maximum number to guess : \n");
-        scanf("%d", &max);
+        scanf("%d", &upperBound);
 
-        if (max <= min) {
+        if (upperBound <= lowerBound) {
             printf("The maximum can't be smaller than the minimum\n\n");
         } else {
             printf("Please enter the number of tries : \n");
@@ -101,11 +101,11 @@ void multiplayerMode() {
         }
 
         do {
-            printf("Please enter the mysterious number between %d and %d : \n", min, max);
-            scanf("%d", &computer_nb);
-        } while (computer_nb < 0 || computer_nb > 100);
+            printf("Please enter the mysterious number between %d and %d : \n", lowerBound, upperBound);
+            scanf("%d", &computerNb);
+        } while (computerNb < 0 || computerNb > 100);
 
-    } while (max <= min || tries <= 0);
+    } while (upperBound <= lowerBound || tries <= 0);
 
 //    system("cls");
 //    Doesn't work for reasons I guess, create issue where the input have to be entered twice.
@@ -116,11 +116,11 @@ void multiplayerMode() {
     }
 
     printf("Hello, player 2 ! Try to guess what number player 1 choosed. \n");
-    printf("The minimum is %d, the maximum is %d \n", min, max);
+    printf("The minimum is %d, the maximum is %d \n", lowerBound, upperBound);
     printf("You have %d tr%s\n", tries, tries > 1 ? "ies" : "y");
     printf("Have fun!\n");
 
-    gameLevel(min, max, tries);
+    gameLevel(lowerBound, upperBound, tries);
 }
 
 void soloMode() {
@@ -158,67 +158,67 @@ void soloMode() {
 }
 
 void gameLevel(int min_i, int max_i, int tries_i) {
-    computer_nb = randomComputerNb(min_i, max_i);
+    computerNb = randomComputerNb(min_i, max_i);
 
-    printf("%d\n", computer_nb);
+    printf("%d\n", computerNb);
 
     do {
         do {
 //            Guesses
             printf("Please enter your guess between %d and %d : \n", min_i, max_i);
-            scanf("%d", &player_nb);
-            if (player_nb > max_i || player_nb < min_i) {
+            scanf("%d", &playerNb);
+            if (playerNb > max_i || playerNb < min_i) {
 //                Verify that the number chosed is between max_i and min_i
-                printf("%d is not a valid number. The guess has to be between %d and %d\n", player_nb, min_i, max_i);
+                printf("%d is not a valid number. The guess has to be between %d and %d\n", playerNb, min_i, max_i);
             }
-        } while (player_nb < min_i || player_nb > max_i);
+        } while (playerNb < min_i || playerNb > max_i);
 
 //       Increment cpt no matter the result
         cpt++;
 //        More or less check
-        if (computer_nb > player_nb) {
+        if (computerNb > playerNb) {
             printf("More\n");
             printf("You tried : %d / %d\n", cpt, tries_i);
-        } else if (computer_nb < player_nb) {
+        } else if (computerNb < playerNb) {
             printf("Less\n");
             printf("You tried : %d / %d\n", cpt, tries_i);
         }
 //      Check if there are still attempts remaining and if the guessed number is incorrect
-    } while ((cpt < tries_i) && (computer_nb != player_nb));
+    } while ((cpt < tries_i) && (computerNb != playerNb));
 
 //    Print result
-    if (computer_nb == player_nb) {
+    if (computerNb == playerNb) {
         printf("Congratulations, you've found the correct number in %d tr%s!\n", cpt, tryPlurial);
     } else {
-        printf("\nYou loose, the number was %d", computer_nb);
+        printf("\nYou loose, the number was %d", computerNb);
     }
     printf("\n\n\n\n");
 }
 
 void autoMode() {
-    //    Mode auto computer against computer with dichotomy research
-    min = 0;
-    max = 1000;
-    computer_nb = randomComputerNb(min, max);
-//computer_nb = 400;
-    while ( computer_nb != player_nb ) {
-        int middle = min + ((max - min) / 2);
-        player_nb = middle;
-        printf("middle = %d\n", middle);
-        printf("computer nb : %d\n", computer_nb);
-        if( player_nb > computer_nb){
-            max = middle - 1;
-            printf("new max : %d\n",max);
+    //    Mode auto computer against computer with binary research
+    lowerBound = 0;
+    upperBound = 1000;
+//    computerNb = 0;
+//    computerNb = 1000;
+//    computerNb = 999;
+//    computerNb = 7;
+    computerNb = randomComputerNb(lowerBound, upperBound);
+
+    do {
+        int middle = lowerBound + ((upperBound - lowerBound) / 2);
+        playerNb = middle;
+        if (playerNb > computerNb) {
+            upperBound = middle - 1;
         } else {
-            min = middle + 1 ;
-            printf("new min : %d\n",min);
+            lowerBound = middle + 1;
         }
-        printf("------------------------------------------\n");
         cpt++;
-    }
+        printf("computer nb : %d\t\tmiddle = %d\t\tupperBound : %d\t\tlowerBound : %d\n", computerNb, middle, upperBound, lowerBound);
 
-    printf("The computer found the number %d in %d turns\n", computer_nb, cpt);
+    } while (computerNb != playerNb);
 
+    printf("The computer found the number %d in %d turns\n", computerNb, cpt);
 }
 
 
