@@ -3,42 +3,20 @@
 #include <time.h>
 #include <conio.h>
 
-/*Le principe est le suivant.
-1. L'ordinateur tire au sort un nombre entre 1 et 100.
-2. Il vous demande de deviner le nombre. Vous entrez donc un nombre entre 1 et 100.
-3. L'ordinateur compare le nombre que vous avez entré avec le nombre « mystère » qu'il a tiré au sort. Il vous dit si le
-nombre mystère est supérieur ou inférieur à celui que vous avez entré.
-4. Puis l'ordinateur vous redemande le nombre.
-5. … Et il vous indique si le nombre mystère est supérieur ou inférieur.
-6. Et ainsi de suite, jusqu'à ce que vous trouviez le nombre mystère.
-
- Blindage ✅
- Difficulté avec des variables de guesses, limite supérieur de nombres ✅
- Nombre random choisi par l'ordinateur ✅
- Auto résolution par l'ordi avec recherche dichotomique ✅*/
-
 //Macro
 // Remplacer au moment de la compilation par les valeur de la macro, ne prends pas de place mémoire
 #define tryPlurial cpt > 1 ? "ies" : "y"
 
-// TODO Clean algorithm automode
-
-
-
 void multiplayerMode();
-
 void soloMode();
-
 void autoMode();
-
 int randomComputerNb(int min_i, int max_i);
-
 void gameLevel(int min_i, int max_i, int tries_i);
 
 int computerNb, playerNb,
-        cpt,
-        tries, lowerBound, upperBound, // Needed for the multiplayer part
-modeChoice, levelChoice;
+        cpt, i,
+        tries, lowerBound, upperBound, middle, // Needed for the multiplayer part
+        modeChoice, levelChoice;
 
 int main() {
     computerNb = 0,
@@ -111,7 +89,7 @@ void multiplayerMode() {
 //    Doesn't work for reasons I guess, create issue where the input have to be entered twice.
 //    An issue with the carriage return perhaps ?
 
-    for (int i = 0; i < 15; i++) {
+    for (i = 0; i < 15; i++) {
         printf("\n");
     }
 
@@ -206,7 +184,7 @@ void autoMode() {
     computerNb = randomComputerNb(lowerBound, upperBound);
 
     do {
-        int middle = lowerBound + ((upperBound - lowerBound) / 2);
+        middle = lowerBound + ((upperBound - lowerBound) / 2);
         playerNb = middle;
         if (playerNb > computerNb) {
             upperBound = middle - 1;
